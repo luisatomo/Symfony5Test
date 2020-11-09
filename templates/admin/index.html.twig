@@ -10,14 +10,38 @@
             <li class="breadcrumb-item active" aria-current="page">Admin</li>
         </ol>
     </nav>
-    <h1>Admin Area, Submit a new Entry</h1>
+    <h1>Admin Area</h1>
     {% for message in app.flashes('success') %}
-    <div class="m-3 p-3 bg-primary text-white">
-        {{ message }}
-    </div>
+        <div class="m-3 p-3 bg-success text-white">
+            {{ message }}
+        </div>
     {% endfor %}
-    <div class="p-3">
-    {{ form(form) }}
-    </div>
+    <a href="/admin/add" class="btn btn-primary m-4 p-3">Add New</a>
+    <table class="table">
+        <thead>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Photo</th>
+        <th>Video</th>
+        <th>Calendar</th>
+        <th>Actions</th>
+        </thead>
+        <tbody>
+        {% for event in events %}
+            <tr>
+                <td>{{ event.title }}</td>
+                <td>{{ event.description }}</td>
+                <td><a href="{{ vich_uploader_asset(event, 'imageFile') }}" target="_blank">
+                        <img
+                                width="50"
+                                src="{{ vich_uploader_asset(event, 'imageFile') }}" alt="{{ event.title }}" />
+                    </a></td>
+                <td>{{ event.video }}</td>
+                <td>{{ event.calendar|date('Y-m-d H:i:s') }}</td>
+                <td><a href="/admin/edit/{{ event.id }}">Edit</a> <a href="/admin/delete/{{ event.id }}">Delete</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 </div>
 {% endblock %}
