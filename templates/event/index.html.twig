@@ -3,18 +3,36 @@
 {% block title %}Hello EventController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/xampp/htdocs/Symfony5Test/my_project/src/Controller/EventController.php'|file_link(0) }}">src/Controller/EventController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/xampp/htdocs/Symfony5Test/my_project/templates/event/index.html.twig'|file_link(0) }}">templates/event/index.html.twig</a></code></li>
-    </ul>
-</div>
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/admin">Go To Admin Area</a></li>
+            </ol>
+        </nav>
+        <h1>Events HomePage</h1>
+        <table class="table">
+            <thead>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Photo</th>
+                <th>Video</th>
+                <th>Calendar</th>
+            </thead>
+            <tbody>
+                {% for event in events %}
+                <tr>
+                    <td>{{ event.title }}</td>
+                    <td>{{ event.description }}</td>
+                    <td><a href="{{ vich_uploader_asset(event, 'imageFile') }}" target="_blank">
+                            <img
+                                    width="50"
+                                    src="{{ vich_uploader_asset(event, 'imageFile') }}" alt="{{ event.title }}" />
+                        </a></td>
+                    <td>{{ event.video }}</td>
+                    <td>{{ event.calendar|date('Y-m-d H:i:s') }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

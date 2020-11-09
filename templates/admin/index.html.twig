@@ -4,8 +4,19 @@
 
 {% block body %}
 <div class="container">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Admin</li>
+        </ol>
+    </nav>
     <h1>Admin Area, Submit a new Entry</h1>
-    <div>
+    {% for message in app.flashes('success') %}
+    <div class="m-3 p-3 bg-primary text-white">
+        {{ message }}
+    </div>
+    {% endfor %}
+    <div class="p-3">
     {{ form(form) }}
     </div>
 </div>
